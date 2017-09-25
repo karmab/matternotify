@@ -12,9 +12,6 @@ before_install:
 - pip install pep8
 - pip install misspellings
 
-install:
-- pip install .
-
 script:
 - find . -name \*.py -exec pep8 --ignore=E501,E402 {} +
 - find . -name '*.py' | misspellings -f -
