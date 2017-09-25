@@ -1,4 +1,4 @@
 #!/bin/bash
 
-echo "Starting the cron stuff"
+echo "Starting the cron thing"
 crond -f
