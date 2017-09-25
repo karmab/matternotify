@@ -38,7 +38,7 @@ team = os.environ.get('MATTERMOST_TEAM')
 if 'MATTERMOST_CHANNEL' not in os.environ:
     print("missing MATTERMOST_CHANNEL.Leaving...")
     os._exit(1)
-channel = os.environ.get('MATTERMOST_CHANNEL')
+channel_name = os.environ.get('MATTERMOST_CHANNEL')
 
 foo = Driver({
     'url': url,
@@ -51,10 +51,10 @@ foo = Driver({
 })
 
 foo.login()
-channel = foo.api['channels'].get_channel_by_name_and_team_name(channel_name=channel, team_name=team)
+channel = foo.api['channels'].get_channel_by_name_and_team_name(channel_name=channel_name, team_name=team)
 channel_id = channel['id']
 
-print("Sending message to channel %s: %s" % (channel, message))
+print("Sending message to channel %s: %s" % (channel_name, message))
 foo.api['posts'].create_post(options={
                              'channel_id': channel_id,
                              'message': message,
