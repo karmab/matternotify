@@ -1,5 +1,6 @@
 # matternotify repository
 
+[![Build Status](https://travis-ci.org/karmab/matternotify.svg?branch=master)](https://travis-ci.org/karmab/matternotify)
 [![](https://images.microbadger.com/badges/image/karmab/matternotify.svg)](https://microbadger.com/images/karmab/matternotify "Get your own image badge on microbadger.com")
 
 MatterNotify allows you to send messages to members of a given mattermost team in a specific channel periodically ( for instance when it's time to meeting ).
