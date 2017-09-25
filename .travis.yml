@@ -1,0 +1,20 @@
+language: python
+notifications:
+  email:
+    recipients:
+      - karimboumedhel@gmail.com
+sudo: required
+dist: trusty
+
+python:
+- 3.4
+before_install:
+- pip install pep8
+- pip install misspellings
+
+install:
+- pip install .
+
+script:
+- find . -name \*.py -exec pep8 --ignore=E501,E402 {} +
+- find . -name '*.py' | misspellings -f -
