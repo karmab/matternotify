@@ -54,7 +54,7 @@ foo.login()
 channel = foo.api['channels'].get_channel_by_name_and_team_name(channel_name=channel, team_name=team)
 channel_id = channel['id']
 
-print("Sending message to channel %s: %s %s" % (channel, message))
+print("Sending message to channel %s: %s" % (channel, message))
 foo.api['posts'].create_post(options={
                              'channel_id': channel_id,
                              'message': message,
