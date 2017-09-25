@@ -3,6 +3,8 @@
 from mattermostdriver import Driver
 import os
 import sys
+import urllib3
+urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
 
 if len(sys.argv) == 1:
     print("No message provided. Leaving")
