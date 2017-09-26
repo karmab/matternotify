@@ -12,4 +12,5 @@ RUN export TZ=Europe/Madrid && ln -snf /usr/share/zoneinfo/$TZ /etc/localtime &&
 RUN chmod u+x /usr/bin/start.sh && chmod o+x /usr/bin/notify.py && sed -i '/session required pam_loginuid.so/d' /etc/pam.d/crond
 
 USER 10001
-ENTRYPOINT  ["/usr/bin/start.sh"]
+ENTRYPOINT [ "uid_entrypoint" ]
+CMD  /usr/bin/start.sh
