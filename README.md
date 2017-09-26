@@ -5,15 +5,11 @@
 
 MatterNotify allows you to send messages to members of a given mattermost team in a specific channel periodically ( for instance when it's time for a meeting ).
 
-You ll have to provide the cron to use, for instance
-
-```
-00 15 * * * /notify.py @all time for a daily meeting
-```
+you can either use the provided script notify.py, or run on docker or openshift
 
 ## Requisites
 
-the following environment variables need to be set for the called script to work
+the following environment variables need to be set for the script to work
 
 - MATTERMOST_USERNAME
 - MATTERMOST_PASSWORD
@@ -22,19 +18,17 @@ the following environment variables need to be set for the called script to work
 - MATTERMOST_TEAM
 - MATTERMOST_CHANNEL
 
-Then i use
+To send a single message using the container version, 
 
 ```
-docker run --name=matternotify -v $PWD/cron:/var/spool/cron -e MATTERMOST_USERNAME=$MATTERMOST_USERNAME -e MATTERMOST_PASSWORD=$MATTERMOST_PASSWORD -e MATTERMOST_URL=$MATTERMOST_URL -e MATTERMOST_PORT=$MATTERMOST_PORT -e MATTERMOST_TEAM=$MATTERMOST_TEAM -e MATTERMOST_CHANNEL=$MATTERMOST_CHANNEL --restart unless-stopped -d karmab/matternotify
+docker run --rm -it --name=matternotify -e MATTERMOST_USERNAME=$MATTERMOST_USERNAME -e MATTERMOST_PASSWORD=$MATTERMOST_PASSWORD -e MATTERMOST_URL=$MATTERMOST_URL -e MATTERMOST_PORT=$MATTERMOST_PORT -e MATTERMOST_TEAM=$MATTERMOST_TEAM -e MATTERMOST_CHANNEL=$MATTERMOST_CHANNEL karmab/matternotify YOUR_MESSAGE
 ```
 
-Also note that i explicitely set the timezone to Europe/Madrid (CEST)
+to use on openshift, we leverage cronjobs
 
-## TODO
-
-- Run on openshift
-- Not run as root?
-- Use centos image
+```
+oc run matternotify --image=karmab/matternotify --schedule='*/1 * * * *' --restart=OnFailure --labels parent="matter" --env MATTERMOST_USERNAME=$MATTERMOST_USERNAME --env MATTERMOST_PASSWORD=$MATTERMOST_PASSWORD --env MATTERMOST_URL=$MATTERMOST_URL --env MATTERMOST_PORT=$MATTERMOST_PORT --env MATTERMOST_TEAM=$MATTERMOST_TEAM --env MATTERMOST_CHANNEL=$MATTERMOST_CHANNEL -- YOUR_MESSAGE
+```
 
 ## Copyright
 

@@ -1,1 +1,0 @@
-*/1 * * * * source /tmp/env ; /usr/bin/notify.py @all "it's time for our meeting"

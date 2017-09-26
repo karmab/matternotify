@@ -6,5 +6,6 @@ RUN yum -y install centos-release-scl && yum -y install rh-python35 && LD_LIBRAR
 ADD notify.py /usr/bin
 
 RUN chmod o+x /usr/bin/notify.py
+ENV LD_LIBRARY_PATH /opt/rh/rh-python35/root/usr/lib64
 
-ENTRYPOINT /bin/bash
+ENTRYPOINT ["/usr/bin/notify.py"]
