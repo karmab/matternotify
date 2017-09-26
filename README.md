@@ -25,7 +25,7 @@ the following environment variables need to be set for the called script to work
 Then i use
 
 ```
-docker run --name=matternotify -v $PWD/crontabs:/var/spool/cron/crontabs -e MATTERMOST_USERNAME=$MATTERMOST_USERNAME -e MATTERMOST_PASSWORD=$MATTERMOST_PASSWORD -e MATTERMOST_URL=$MATTERMOST_URL -e MATTERMOST_PORT=$MATTERMOST_PORT -e MATTERMOST_TEAM=$MATTERMOST_TEAM -e MATTERMOST_CHANNEL=$MATTERMOST_CHANNEL --restart unless-stopped -d karmab/matternotify
+docker run --name=matternotify -v $PWD/cron:/var/spool/cron -e MATTERMOST_USERNAME=$MATTERMOST_USERNAME -e MATTERMOST_PASSWORD=$MATTERMOST_PASSWORD -e MATTERMOST_URL=$MATTERMOST_URL -e MATTERMOST_PORT=$MATTERMOST_PORT -e MATTERMOST_TEAM=$MATTERMOST_TEAM -e MATTERMOST_CHANNEL=$MATTERMOST_CHANNEL --restart unless-stopped -d karmab/matternotify
 ```
 
 Also note that i explicitely set the timezone to Europe/Madrid (CEST)

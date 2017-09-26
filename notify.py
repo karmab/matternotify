@@ -1,4 +1,4 @@
-#!/usr/bin/env python3
+#!/opt/rh/rh-python35/root/bin/python3.5
 
 from mattermostdriver import Driver
 import os
