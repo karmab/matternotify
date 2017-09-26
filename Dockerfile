@@ -1,14 +1,15 @@
-FROM gliderlabs/alpine:3.3
+FROM centos
 MAINTAINER Karim Boumedhel <karimboumedhel@gmail.com>
 
-RUN apk add --no-cache bash python3 tzdata && \
-    python3 -m ensurepip && \
-    rm -r /usr/lib/python*/ensurepip && \
-    pip3 install mattermostdriver && cp /usr/share/zoneinfo/Europe/Madrid /etc/localtime
+RUN yum -y install centos-release-scl cronie sudo && yum -y install rh-python35 && LD_LIBRARY_PATH=/opt/rh/rh-python35/root/usr/lib64 /opt/rh/rh-python35/root/usr/bin/pip install mattermostdriver && rm -rf /var/cache/yum
 
-ADD notify.py /
+RUN useradd -m -d /home/matter matter
+ADD notify.py /usr/bin
 ADD start.sh /usr/bin
+ADD sudo_matter /etc/sudoers.d
+RUN export TZ=Europe/Madrid && ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
 
-RUN chown root:root /usr/bin/start.sh && chmod u+x /usr/bin/start.sh
+RUN chmod u+x /usr/bin/start.sh && chmod o+x /usr/bin/notify.py && sed -i '/session required pam_loginuid.so/d' /etc/pam.d/crond
 
+USER matter
 ENTRYPOINT  ["/usr/bin/start.sh"]
