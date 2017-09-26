@@ -1,1 +1,0 @@
-matter ALL=(ALL) NOPASSWD: /sbin/crond
