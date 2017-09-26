@@ -30,6 +30,8 @@ to use on openshift, we leverage cronjobs
 oc run matternotify --image=karmab/matternotify --schedule='*/1 * * * *' --restart=OnFailure --labels parent="matter" --env MATTERMOST_USERNAME=$MATTERMOST_USERNAME --env MATTERMOST_PASSWORD=$MATTERMOST_PASSWORD --env MATTERMOST_URL=$MATTERMOST_URL --env MATTERMOST_PORT=$MATTERMOST_PORT --env MATTERMOST_TEAM=$MATTERMOST_TEAM --env MATTERMOST_CHANNEL=$MATTERMOST_CHANNEL -- YOUR_MESSAGE
 ```
 
+for more security, you can also use [secrets](secrets.md)
+
 ## Copyright
 
 Copyright 2017 Karim Boumedhel

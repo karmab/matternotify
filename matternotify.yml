@@ -1,0 +1,73 @@
+apiVersion: batch/v2alpha1
+kind: CronJob
+metadata:
+  creationTimestamp: 2017-09-26T16:38:05Z
+  labels:
+    parent: matter
+  name: matternotify
+  namespace: matter
+  resourceVersion: "108886"
+  selfLink: /apis/batch/v2alpha1/namespaces/matter/cronjobs/matternotify
+  uid: 125e8e88-a2d9-11e7-915c-5254005af8a9
+spec:
+  concurrencyPolicy: Allow
+  jobTemplate:
+    metadata:
+      creationTimestamp: null
+    spec:
+      template:
+        metadata:
+          creationTimestamp: null
+          labels:
+            parent: matter
+        spec:
+          containers:
+          - command:
+            - notify.py
+            - '@all'
+            - it's time for our meeting
+            env:
+            - name: MATTERMOST_USERNAME
+              valueFrom:
+                secretKeyRef:
+                  name: matternotify-secret
+                  key: username
+            - name: MATTERMOST_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: matternotify-secret
+                  key: password
+            - name: MATTERMOST_URL
+              valueFrom:
+                secretKeyRef:
+                  name: matternotify-secret
+                  key: url
+            - name: MATTERMOST_PORT
+              valueFrom:
+                secretKeyRef:
+                  name: matternotify-secret
+                  key: port
+            - name: MATTERMOST_TEAM
+              valueFrom:
+                secretKeyRef:
+                  name: matternotify-secret
+                  key: team
+            - name: MATTERMOST_CHANNEL
+              valueFrom:
+                secretKeyRef:
+                  name: matternotify-secret
+                  key: channel
+            image: karmab/matternotify
+            imagePullPolicy: Always
+            name: matternotify
+            resources: {}
+            terminationMessagePath: /dev/termination-log
+            terminationMessagePolicy: File
+          dnsPolicy: ClusterFirst
+          restartPolicy: OnFailure
+          schedulerName: default-scheduler
+          securityContext: {}
+          terminationGracePeriodSeconds: 30
+  schedule: '*/1 * * * *'
+  suspend: false
+status: {}
