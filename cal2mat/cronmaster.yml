@@ -1,0 +1,43 @@
+apiVersion: batch/v2alpha1
+kind: CronJob
+metadata:
+  labels:
+    parent: matter
+  name: cal2mat
+spec:
+  concurrencyPolicy: Replace
+  jobTemplate:
+    metadata:
+      creationTimestamp: null
+    spec:
+      template:
+        metadata:
+          creationTimestamp: null
+          labels:
+            parent: matter
+        spec:
+          containers:
+          - command:
+            - cal2mat.py
+            image: docker.io/karmab/cal2mat
+            imagePullPolicy: Always
+            name: matternotify
+            resources: {}
+            terminationMessagePath: /dev/termination-log
+            terminationMessagePolicy: File
+            volumeMounts:
+             - name: gcalendar-secret
+               mountPath: "/tmp/.credentials"
+               readOnly: false
+          volumes:
+          - name: gcalendar-secret
+            secret:
+              secretName: gcalendar-secret
+          dnsPolicy: ClusterFirst
+          restartPolicy: OnFailure
+          schedulerName: default-scheduler
+          securityContext: {}
+          terminationGracePeriodSeconds: 30
+  schedule: '00 8 * * *'
+  suspend: false
+status: {}

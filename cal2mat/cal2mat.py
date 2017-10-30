@@ -1,3 +1,5 @@
+#!/opt/rh/rh-python35/root/bin/python3.5
+
 import yaml
 from kubernetes import client, config
 import os
@@ -7,23 +9,24 @@ urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
 
 
 namespace = 'matternotify'
-mastercron = 'cal2mat'
+cronmaster = 'cal2mat'
 timezone = 'America/New_York'
 days = 1
 patterns = ['Application Integration Engineering', 'AOS Group 3/4']
 before = 5
-template = "crontemplate.yml"
 
 if __name__ == "__main__":
     if 'KUBERNETES_PORT' in os.environ:
         config.load_incluster_config()
+        template = "/tmp/crontemplate.yml"
     else:
         config.load_kube_config()
+        template = "crontemplate.yml"
     cli = client.BatchV2alpha1Api()
     # clean old crons
     old_crons = [item.metadata.name for item in cli.list_namespaced_cron_job(namespace=namespace).items]
     for old in cli.list_namespaced_cron_job(namespace=namespace).items:
-        if old.metadata.name == mastercron:
+        if old.metadata.name == cronmaster:
             continue
         print("Removing old cronjob %s" % old.metadata.name)
         cli.delete_namespaced_cron_job(old.metadata.name, namespace, {})

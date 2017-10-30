@@ -6,26 +6,31 @@ from oauth2client import client
 from oauth2client import tools
 from oauth2client.file import Storage
 import datetime
+import shutil
 
 
 SCOPES = 'https://www.googleapis.com/auth/calendar.readonly'
 CLIENT_SECRET_FILE = 'secret.json'
 APPLICATION_NAME = 'Google Calendar API Python Quickstart'
-# based on https://developers.google.com/google-apps/calendar/v3/reference/events/list
 
 
 def get_credentials():
-    home_dir = os.path.expanduser('~')
-    credential_dir = os.path.join(home_dir, '.credentials')
-    if not os.path.exists(credential_dir):
-        os.makedirs(credential_dir)
-    credential_path = os.path.join(credential_dir, 'calendar-python-quickstart.json')
+    if 'KUBERNETES_PORT' in os.environ:
+        old_path = '/tmp/.credentials/calendar-python-quickstart.json'
+        credential_path = '/tmp/.credentials/x.json'
+        shutil.copyfile(old_path, credential_path)
+    else:
+        home_dir = os.path.expanduser('~')
+        credential_dir = os.path.join(home_dir, '.credentials')
+        if not os.path.exists(credential_dir):
+            os.makedirs(credential_dir)
+        credential_path = os.path.join(credential_dir, 'calendar-python-quickstart.json')
     store = Storage(credential_path)
     credentials = store.get()
     if not credentials or credentials.invalid:
         flow = client.flow_from_clientsecrets(CLIENT_SECRET_FILE, SCOPES)
         flow.user_agent = APPLICATION_NAME
-        credentials = tools.run(flow, store)
+        credentials = tools.run_flow(flow=flow, storage=store)
         print('Storing credentials to ' + credential_path)
     return credentials
 
