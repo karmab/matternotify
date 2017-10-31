@@ -12,7 +12,7 @@ namespace = 'matternotify'
 cronmaster = 'cal2mat'
 timezone = 'America/New_York'
 days = 1
-patterns = ['Application Integration Engineering', 'AOS Group 3/4']
+patterns = ['Application Integration Engineering', 'Group 3/4']
 before = 5
 
 if __name__ == "__main__":
@@ -34,7 +34,7 @@ if __name__ == "__main__":
         oribody = yaml.load(data)
     newentries = googlecalendar.get_events(timezone=timezone, days=days, patterns=patterns, before=before)
     for entry in newentries:
-        name = entry[0].strip().lower()
+        name = entry[0].strip().lower().replace(" ", "-")
         schedule = entry[1]
         location = entry[2]
         body = oribody
