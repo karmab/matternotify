@@ -11,9 +11,9 @@ urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
 namespace = 'matternotify'
 cronmaster = 'cal2mat'
 timezone = 'America/New_York'
-days = 1
+days = int(os.environ['DAYS']) if 'DAYS' in os.environ else 1
 patterns = ['Application Integration Engineering', 'Group 3/4']
-before = 5
+before = int(os.environ['BEFORE']) if 'BEFORE' in os.environ else 3
 
 if __name__ == "__main__":
     if 'KUBERNETES_PORT' in os.environ:
