@@ -57,10 +57,15 @@ def get_events(calendar='primary', count=20, timezone=None, days=1, patterns=[],
     results = []
     if events:
         for event in events:
+            print(event, event['start'].get('dateTime', event['start'].get('date'))[:-6])
             summary = event['summary']
             location = event.get('location', None)
             start = event['start'].get('dateTime', event['start'].get('date'))[:-6]
-            start = datetime.datetime.strptime(start, "%Y-%m-%dT%H:%M:%S")
+            try:
+                start = datetime.datetime.strptime(start, "%Y-%m-%dT%H:%M:%S")
+            except:
+                print("Incorrect Date for Event %s.Skipping" % summary)
+                continue
             start = start - datetime.timedelta(minutes=before)
             cron = start.strftime("%M %H %d %m *")
             if not patterns:

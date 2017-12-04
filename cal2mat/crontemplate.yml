@@ -6,6 +6,8 @@ metadata:
   name: crontemplate
 spec:
   concurrencyPolicy: Replace
+  successfulJobsHistoryLimit: 0
+  failedJobsHistoryLimit: 0
   jobTemplate:
     metadata:
       creationTimestamp: null
