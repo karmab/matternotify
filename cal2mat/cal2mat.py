@@ -12,7 +12,8 @@ namespace = 'matternotify'
 cronmaster = 'cal2mat'
 timezone = 'America/New_York'
 days = int(os.environ['DAYS']) if 'DAYS' in os.environ else 1
-patterns = ['Application Integration Engineering', 'Group 3/4']
+# patterns = os.environ['PATTERNS'].split(',') if 'PATTERNS' in os.environ else ['Application Integration Engineering', 'Group 3/4']
+patterns = os.environ['PATTERNS'].split(',') if 'PATTERNS' in os.environ else ['[CNV] Community Enablement', 'KubeVirt Community Weekly Meeting']
 before = int(os.environ['BEFORE']) if 'BEFORE' in os.environ else 3
 
 if __name__ == "__main__":
