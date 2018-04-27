@@ -72,8 +72,6 @@ def get_events(calendar='primary', count=20, timezone=None, days=1, patterns=[],
             else:
                 for pattern in patterns:
                     if pattern in summary:
-                        # summary = summary.replace(pattern, '')
-                        summary = summary.replace(": ", '')
                         summary = summary.strip()
                         results.append([summary, cron, location])
     return results

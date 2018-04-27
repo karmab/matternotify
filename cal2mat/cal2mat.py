@@ -36,14 +36,15 @@ if __name__ == "__main__":
     with open(template) as data:
         oribody = yaml.load(data)
     newentries = googlecalendar.get_events(timezone=timezone, days=days, patterns=patterns, before=before)
-    for entry in newentries:
-        name = entry[0].strip().lower().replace(" ", "-")
+    for index, entry in enumerate(newentries):
+        info = entry[0].strip().lower()
+        name = 'cal2mat-%d' % index
         schedule = entry[1]
-        location = entry[2]
+        location = entry[2] if entry[2] is not None else ''
         body = oribody
         body['metadata']['name'] = name
         body['spec']['schedule'] = schedule
         body['spec']['jobTemplate']['spec']['template']['spec']['containers'][0]['command'][1] = \
-            "@all %s %s" % (name, location)
+            "@all %s %s" % (info, location)
         print("Creating cronjob %s" % name)
         cli.create_namespaced_cron_job(namespace, body)
