@@ -7,16 +7,18 @@ import googlecalendar
 import urllib3
 urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
 
-
 namespace = 'matternotify'
 cronmaster = 'cal2mat'
 timezone = 'America/New_York'
 days = int(os.environ['DAYS']) if 'DAYS' in os.environ else 1
-# patterns = os.environ['PATTERNS'].split(',') if 'PATTERNS' in os.environ else ['Application Integration Engineering', 'Group 3/4']
-patterns = os.environ['PATTERNS'].split(',') if 'PATTERNS' in os.environ else ['[CNV] Community Enablement', 'KubeVirt Community Weekly Meeting']
 before = int(os.environ['BEFORE']) if 'BEFORE' in os.environ else 3
 
 if __name__ == "__main__":
+    if 'PATTERNS' not in os.environ:
+        print("Missing patterns.Leaving...")
+        os._exit(1)
+    else:
+        patterns = os.environ['PATTERNS'].split(',')
     if 'KUBERNETES_PORT' in os.environ:
         config.load_incluster_config()
         template = "/tmp/crontemplate.yml"
@@ -41,6 +43,7 @@ if __name__ == "__main__":
         body = oribody
         body['metadata']['name'] = name
         body['spec']['schedule'] = schedule
-        body['spec']['jobTemplate']['spec']['template']['spec']['containers'][0]['command'][1] = "@all %s %s" % (name, location)
+        body['spec']['jobTemplate']['spec']['template']['spec']['containers'][0]['command'][1] = \
+            "@all %s %s" % (name, location)
         print("Creating cronjob %s" % name)
         cli.create_namespaced_scheduled_job(namespace, body)

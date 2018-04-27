@@ -20,6 +20,13 @@ spec:
           - command:
             - cal2mat.py
             image: docker.io/karmab/cal2mat
+            env:
+            - name: PATTERNS
+              value: "boss meeting,community beers"
+            - name: DAYS
+              value: 1
+            - name: BEFORE
+              value: 3
             imagePullPolicy: Always
             name: matternotify
             resources: {}
