@@ -6,6 +6,8 @@ metadata:
   name: cal2mat
 spec:
   concurrencyPolicy: Replace
+  successfulJobsHistoryLimit: 0
+  failedJobsHistoryLimit: 0
   jobTemplate:
     metadata:
       creationTimestamp: null
@@ -22,11 +24,11 @@ spec:
             image: docker.io/karmab/cal2mat
             env:
             - name: PATTERNS
-              value: "boss meeting,community beers"
+              value: "[CNV] Community Enablement"
             - name: DAYS
-              value: 1
+              value: "1"
             - name: BEFORE
-              value: 3
+              value: "5"
             imagePullPolicy: Always
             name: matternotify
             resources: {}
@@ -45,6 +47,6 @@ spec:
           schedulerName: default-scheduler
           securityContext: {}
           terminationGracePeriodSeconds: 30
-  schedule: '00 8 * * *'
+  schedule: '*/5 * * * *'
   suspend: false
 status: {}

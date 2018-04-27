@@ -57,7 +57,6 @@ def get_events(calendar='primary', count=20, timezone=None, days=1, patterns=[],
     results = []
     if events:
         for event in events:
-            print(event, event['start'].get('dateTime', event['start'].get('date'))[:-6])
             summary = event['summary']
             location = event.get('location', None)
             start = event['start'].get('dateTime', event['start'].get('date'))[:-6]
@@ -79,6 +78,6 @@ def get_events(calendar='primary', count=20, timezone=None, days=1, patterns=[],
                         results.append([summary, cron, location])
     return results
 
+
 if __name__ == '__main__':
     print(get_events(timezone='America/New_York', days=1, before=0))
-    # get_events('aos-group-4')

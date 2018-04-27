@@ -46,4 +46,4 @@ if __name__ == "__main__":
         body['spec']['jobTemplate']['spec']['template']['spec']['containers'][0]['command'][1] = \
             "@all %s %s" % (name, location)
         print("Creating cronjob %s" % name)
-        cli.create_namespaced_scheduled_job(namespace, body)
+        cli.create_namespaced_cron_job(namespace, body)
