@@ -24,11 +24,11 @@ spec:
             image: docker.io/karmab/cal2mat
             env:
             - name: PATTERNS
-              value: "[CNV] Community Enablement"
+              value: "[CNV] Community Enablement,KubeVirt Community Weekly Meeting"
             - name: DAYS
               value: "1"
             - name: BEFORE
-              value: "5"
+              value: "3"
             imagePullPolicy: Always
             name: matternotify
             resources: {}

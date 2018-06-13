@@ -32,6 +32,17 @@ oc run matternotify --image=karmab/matternotify --schedule='*/1 * * * *' --resta
 
 for more security, you can also use [secrets](secrets.md)
 
+
+## Using with cal2mat
+
+```
+oc new-project matternotify
+oc create secret generic matternotify-secret --from-literal=username=$MATTERMOST_USERNAME --from-literal=password=$MATTERMOST_PASSWORD --from-literal=url=$MATTERMOST_URL --from-literal=port=$MATTERMOST_PORT --from-literal=team=$MATTERMOST_TEAM --from-literal=channel=$MATTERMOST_CHANNEL
+oc create secret generic gcalendar-secret --from-file=$HOME/.credentials/calendar-python-quickstart.json
+# edit cronmaster PATTERNS env and optionally DAYS and BEFORE( for time before alert to be sent)
+oc create -f cronmaster.yml
+```
+
 ## Copyright
 
 Copyright 2017 Karim Boumedhel
