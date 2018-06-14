@@ -15,12 +15,12 @@ APPLICATION_NAME = 'Google Calendar API Python Quickstart'
 
 
 def get_credentials():
+    home_dir = os.path.expanduser('~')
     if 'KUBERNETES_PORT' in os.environ:
         old_path = '/tmp/.credentials/calendar-python-quickstart.json'
-        credential_path = '/tmp/.credentials/x.json'
+        credential_path = '%s/calendar-python-quickstart.json' % home_dir
         shutil.copyfile(old_path, credential_path)
     else:
-        home_dir = os.path.expanduser('~')
         credential_dir = os.path.join(home_dir, '.credentials')
         if not os.path.exists(credential_dir):
             os.makedirs(credential_dir)
