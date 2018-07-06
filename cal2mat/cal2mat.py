@@ -9,9 +9,9 @@ urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
 
 namespace = 'matternotify'
 cronmaster = 'cal2mat'
-timezone = 'America/New_York'
 days = int(os.environ['DAYS']) if 'DAYS' in os.environ else 1
 before = int(os.environ['BEFORE']) if 'BEFORE' in os.environ else 3
+timezone = os.environ['TZ'] if 'TZ' in os.environ else 'Europe/Madrid'
 
 if __name__ == "__main__":
     if 'PATTERNS' not in os.environ:

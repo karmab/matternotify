@@ -1,0 +1,12 @@
+FROM alpine:3.7
+MAINTAINER Karim Boumedhel <karimboumedhel@gmail.com>
+
+RUN apk add --update --no-cache python3
+
+RUN pip3 install --no-cache-dir httplib2 google-api-python-client oauth2client urllib3
+
+ADD googlecalendar.py /usr/bin
+ADD cal2mat_unix.py /usr/bin
+
+RUN chmod o+x /usr/bin/cal2mat_unix.py
+ENTRYPOINT ["/usr/bin/cal2mat_unix.py"]

@@ -6,6 +6,7 @@ metadata:
   name: crontemplate
 spec:
   concurrencyPolicy: Replace
+  startingDeadlineSeconds: 10
   successfulJobsHistoryLimit: 0
   failedJobsHistoryLimit: 0
   jobTemplate:

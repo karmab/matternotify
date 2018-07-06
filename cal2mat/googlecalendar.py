@@ -6,7 +6,6 @@ from oauth2client import client
 from oauth2client import tools
 from oauth2client.file import Storage
 import datetime
-import shutil
 
 
 SCOPES = 'https://www.googleapis.com/auth/calendar.readonly'
@@ -15,16 +14,8 @@ APPLICATION_NAME = 'Google Calendar API Python Quickstart'
 
 
 def get_credentials():
-    home_dir = os.path.expanduser('~')
-    if 'KUBERNETES_PORT' in os.environ:
-        old_path = '/tmp/.credentials/calendar-python-quickstart.json'
-        credential_path = '%s/calendar-python-quickstart.json' % home_dir
-        shutil.copyfile(old_path, credential_path)
-    else:
-        credential_dir = os.path.join(home_dir, '.credentials')
-        if not os.path.exists(credential_dir):
-            os.makedirs(credential_dir)
-        credential_path = os.path.join(credential_dir, 'calendar-python-quickstart.json')
+    calendarpath = os.environ['CALENDARPATH'] if 'CALENDARPATH' in os.environ else '.'
+    credential_path = os.path.join('%s/calendar-python-quickstart.json' % calendarpath)
     store = Storage(credential_path)
     credentials = store.get()
     if not credentials or credentials.invalid:

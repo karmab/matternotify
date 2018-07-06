@@ -29,6 +29,8 @@ spec:
               value: "1"
             - name: BEFORE
               value: "3"
+            - name: TZ
+              value: "Europe/Madrid"
             imagePullPolicy: Always
             name: matternotify
             resources: {}
