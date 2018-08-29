@@ -23,7 +23,7 @@ spec:
           containers:
           - command:
             - notify.py
-            - '@all standup'
+            - '@here standup'
             env:
             - name: MATTERMOST_USERNAME
               valueFrom:

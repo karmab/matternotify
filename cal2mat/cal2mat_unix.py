@@ -22,5 +22,5 @@ if __name__ == "__main__":
         schedule = entry[1]
         location = entry[2] if entry[2] is not None else ''
         schedule = schedule
-        command = "@all %s %s" % (info, location)
+        command = "@here %s %s" % (info, location)
         print("%s %s %s" % (schedule, exe, command))
